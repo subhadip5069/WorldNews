@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Addlist</title>
+    
+    <!-- Bootstrap & Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+   <style>
+    /* Sidebar - Start Collapsed */
+#sidebar {
+    width: 50px; /* Collapsed by default */
+    height: 100vh;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: linear-gradient(180deg, #00233f, #000000); /* Gradient */
+    padding-top: 20px;
+  
+    box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.2);
+    overflow-x: hidden;
+}
+
+/* Expanded Sidebar */
+#sidebar.expanded {
+    width: 250px;
+}
+
+/* Hide text when collapsed */
+#sidebar h2,
+#sidebar .nav-item span {
+    display: none;
+}
+
+#sidebar.expanded h2,
+#sidebar.expanded .nav-item span {
+    display: inline-block;
+}
+
+/* Sidebar Navigation */
+#sidebar .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+    
+}
+
+#sidebar .nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar icons */
+#sidebar .nav-item i {
+    font-size: 18px;
+    margin-right: 15px;
+}
+
+/* Adjust content when sidebar is collapsed */
+#content {
+    margin-left: 70px; /* Adjust for collapsed sidebar */
+    transition: margin-left 0.3s ease-in-out;
+    width: calc(100% - 70px);
+    padding: 20px;
+}
+
+#sidebar.expanded + #content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+   </style>
+
+    <script defer>
+      document.addEventListener("DOMContentLoaded", function () {
+    let sidebar = document.getElementById("sidebar");
+    let content = document.getElementById("content");
+    let toggleBtn = document.getElementById("toggleSidebarBtn");
+
+    // Ensure sidebar starts collapsed
+    sidebar.classList.remove("expanded");
+
+    toggleBtn.addEventListener("click", function () {
+        sidebar.classList.toggle("expanded");
+        content.classList.toggle("expanded");
+    });
+});
+
+    </script>
+</head>
+<body>
+    <div class="d-flex">
+      
+
+    <%- include("layout/navbar.ejs") %>
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Sticky Navbar -->
+            <nav class="navbar navbar-light bg-light mb-3">
+                
+                <div class="container-fluid">
+                    <button id="toggleSidebarBtn" class="fa-solid fa-arrow-right-long" style="color: #000000; border-radius: 20px;" onclick="toggleSidebar()"></button> 
+                    <span class="navbar-brand mb-0 h1">WORLD EXPRESS</span>
+                    <style>
+                        .marquee {
+                          display: inline-block;
+                          background-color: #21252900;
+                          color: aliceblue;
+                          border-radius: 10px;
+                          font-size: 20px;
+                          font-weight: bold;
+                          white-space: nowrap;
+                          animation: scrollText 10s linear infinite, colorChange 5s infinite alternate;
+                        }
+                      
+                       
+                      
+                        @keyframes colorChange {
+                          0% {
+                            color: purple;
+                          }
+                          10% {
+                            color: blue;
+                          }
+                          20% {
+                            color: skyblue;
+                          }
+                          30% {
+                            color: green;
+                          }
+                          40% {
+                            color: yellow;
+                           
+                          }
+                          50% {
+                            color: rgb(255, 174, 0);
+                            
+                          }
+                          60% {
+                            color: red;
+                          }
+                          70% {
+                            color: rgb(229, 255, 0);
+                          }
+                          80% {
+                           color: #00ffdd;
+                          }
+                          90% {
+                            color: #6340ff;
+                           
+                          }
+                          100% {
+                            color: #ff009d;
+                            
+                          }
+                        }
+                      </style>
+                      
+                      <marquee behavior="scroll" direction="left" style="background-color: #212529; border-radius: 20px;">
+                        <span class="marquee">WORLD EXPRESS Admin Dashboard You Can Manage Here</span>
+                      </marquee>
+                      
+                </div>
+            </nav>
+    
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="mb-4">Add Weather</h2>
+                        <form action="/admin/create/weather" method="POST">
+                            <div class="form-group">
+                                <label for="name">Location:</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add weather</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="container mt-5">
+              <div class="row">
+                  <div class="col-md-12">
+                      <h2 class="mb-4">Weather List</h2>
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>Name</th>
+                                  <th>Current Weather</th>
+                                  <th>Action</th>
+                              </tr>
+                          </thead>
+                          <tbody id="weatherList">
+                              <!-- Dynamic content will be inserted here -->
+                          </tbody>
+                      </table>
+                  </div>
+              </div>  
+          </div>
+          
+          <script>
+            // Function to fetch the city data from the backend
+            async function fetchCities() {
+              try {
+                const response = await fetch('/admin/cities');
+                const cities = await response.json();  // Parse the JSON response
+          
+                // Call displayWeather with the fetched cities
+                displayWeather(cities);
+              } catch (error) {
+                console.error("Error fetching city data:", error);
+              }
+            }
+          
+            // Function to fetch weather data for a given city
+            async function fetchWeather(city) {
+              const apiKey = "3d6ff3fe3e01aecf76456580301c8ac7";
+              const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+              const data = await response.json();
+              return data;
+            }
+          
+            // Function to display weather data in the table
+            async function displayWeather(cities) {
+              const weatherListContainer = document.getElementById("weatherList");
+              weatherListContainer.innerHTML = ''; // Clear existing content
+          
+              // Create a fragment to append all rows at once
+              const fragment = document.createDocumentFragment();
+          
+              for (let weather of cities) {
+                try {
+                  const weatherData = await fetchWeather(weather.name);
+                  const weatherDescription = weatherData.weather[0].description;
+                  const temperature = weatherData.main.temp;
+          
+                  // Create a row for the table
+                  const row = document.createElement("tr");
+          
+                  row.innerHTML = `
+                    <td>${weather.name}</td>
+                    <td>${temperature}°C, ${weatherDescription}</td>
+                   <td>
+  <form action="/admin/delete/weather/${weather._id}" method="POST" style="display: inline;">
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+  </form>
+</td>
+
+
+                  `;
+          
+                  fragment.appendChild(row);  // Append the row to the fragment
+          
+                } catch (error) {
+                  console.error("Error fetching weather data:", error);
+                  const row = document.createElement("tr");
+                  row.innerHTML = `
+                    <td>${weather.name}</td>
+                    <td>Error fetching data</td>
+                    <td>
+  <form action="/admin/delete/weather/${weather._id}" method="POST" style="display: inline;">
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+  </form>
+</td>
+                  `;
+                  fragment.appendChild(row);  // Append the row to the fragment
+                }
+              }
+          
+              // Once all rows are created, append the fragment to the table
+              weatherListContainer.appendChild(fragment);
+            }
+          
+            // Call the fetchCities function when the page loads
+            document.addEventListener("DOMContentLoaded", fetchCities);
+          </script>
+          
+          
+        </div>
+    </div>
+</body>
+</html>

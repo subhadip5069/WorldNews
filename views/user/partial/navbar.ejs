@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORLD EXPRESS</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Hide Google Translate toolbar */
+       /* Hide the Google Translate banner */
+.goog-te-banner-frame {
+    display: none !important;
+}
+
+/* Ensure no extra space is left behind */
+body {
+    top: 0px !important;
+}
+
+/* Hide the Google Translate floating toolbar */
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+/* Hide the Google Translate widget */
+.goog-te-gadget {
+    font-size: 0 !important;
+    display: none !important;
+}
+
+/* Hide Google Translate branding & unnecessary elements */
+.goog-logo-link,
+.goog-te-gadget span,
+.goog-te-gadget img {
+    display: none !important;
+}
+
+/* Ensure no margin shift occurs */
+.goog-te-gadget-simple {
+    display: none !important;
+}
+
+/* Hide translation dropdown when not needed */
+.goog-te-combo {
+    display: none !important;
+}
+
+
+        /* Remove extra margin caused by Google Translate */
+        body {
+            top: 0px !important;
+        }
+         /* Custom Scrollbar for News Section */
+   /* Custom Scrollbar for News Section */
+   .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--bg-color);
+            transition: background 0.3s ease;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .nav-item a {
+            color: var(--text-color);
+            font-weight: bold;
+            padding: 10px 15px;
+        }
+
+        .nav-item a:hover {
+            color: red;
+        }
+
+        .live-btn {
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .toggle-icon {
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Dark Mode */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+        }
+
+        .dark-mode {
+            --bg-color: #222;
+            --text-color: #ffffff;
+        }
+.scrollable-news {
+    max-height: 110vh;
+    overflow-y: auto;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #515533 #f1f1f100; /* Scrollbar Thumb and Track */
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+.scrollable-news::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 10px; /* Rounded scrollbar */
+}
+
+.scrollable-news::-webkit-scrollbar-track {
+    background: #f1f1f100;
+    border-radius: 10px; /* Rounded track */
+}
+
+.scrollable-news::-webkit-scrollbar-thumb {
+    background: #88888800;
+    border-radius: 10px; /* Rounded thumb */
+}
+
+.scrollable-news::-webkit-scrollbar-thumb:hover {
+    background: #55555500;
+}
+/* Sticky Advertisement */
+.sticky-ad {
+    position: sticky;
+    top: 10px;
+}
+
+/* Swiper Container */
+.swiper-container {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+/* Swiper Slide */
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide .card {
+    width: 250px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.swiper-slide .card:hover {
+    transform: scale(1.05);
+}
+
+/* Custom Scrollbar */
+.swiper-container::-webkit-scrollbar {
+    display: none;
+}/* Styling the scrollbar */
+.video-stories-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin; /* Firefox */
+}
+
+/* Webkit (Chrome, Edge, Safari) */
+.video-stories-container::-webkit-scrollbar {
+    height: 10px; /* Adjust scrollbar height */
+}
+
+.video-stories-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track background */
+    border-radius: 10px;
+}
+
+.video-stories-container::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar color */
+    border-radius: 10px;
+}
+
+.video-stories-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+}
+.video-stories-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            scroll-behavior: smooth;
+            padding: 10px;
+            white-space: nowrap;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+        .video-stories-container::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari */
+        }
+        
+        /* Video story card */
+        .video-story {
+            width: 120px;
+            height: 220px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: black;
+            cursor: pointer;
+            flex: 0 0 auto;
+            position: relative;
+        }
+        .video-story video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .video-story .username {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px;
+        }
+       
+        /* News Table */
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: #f4f4f4; }
+  
+        /* Scroll Buttons */
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .scroll-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        .scroll-left {
+            left: -40px;
+        }
+        .scroll-right {
+            right: -40px;
+        }
+        .custom-card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+       
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+<!-- Hidden Google Translate Element -->
+<div id="google_translate_element" style="display: none;"></div>
+
+<!-- Google Translate API -->
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- Header -->
+<div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center text-white py-3 px-4" style="background-color: red;">
+    <h1 class="text-center text-md-start d-none d-md-block" style="margin: 0; font-size: 28px;">WORLD EXPRESS</h1>
+
+    <!-- Current Time -->
+    <div id="current-time" class="text-center my-2 my-md-0" style="font-size: 16px; font-weight: bold;"></div>
+
+    <!-- Language Selector -->
+    <!-- <div id="google_translate_element" style="display: none;"></div> -->
+
+    <!-- Custom Language Selector -->
+    <select id="custom_translate" class="form-select w-auto" style="width: 120px;">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="bn">Bengali</option>
+    </select>.
+
+    <script>
+            function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: "en", autoDisplay: false },
+                "google_translate_element"
+            );
+        }
+    
+        function removeGoogleTranslateToolbar() {
+            let frame = document.querySelector(".goog-te-banner-frame");
+            let skipTranslate = document.querySelector(".skiptranslate");
+    
+            if (frame) frame.style.display = "none";
+            if (skipTranslate) skipTranslate.style.display = "none";
+            document.body.style.top = "0px";
+        }
+    
+        // Observe DOM changes and remove Google Translate toolbar dynamically
+        const observer = new MutationObserver(() => {
+            removeGoogleTranslateToolbar();
+        });
+    
+        observer.observe(document.body, { childList: true, subtree: true });
+    
+        document.addEventListener("DOMContentLoaded", function () {
+            let customTranslate = document.getElementById("custom_translate");
+    
+            if (customTranslate) {
+                customTranslate.addEventListener("change", function () {
+                    let lang = this.value;
+                    let googleSelect = document.querySelector(".goog-te-combo");
+    
+                    if (googleSelect) {
+                        googleSelect.value = lang;
+                        googleSelect.dispatchEvent(new Event("change"));
+                    }
+    
+                    // Hide toolbar after selection
+                    setTimeout(removeGoogleTranslateToolbar, 100);
+    
+                    // Reload when switching back to English
+                    if (lang === "en") {
+                        setTimeout(() => location.reload(), 150);
+                    }
+                });
+            }
+        });
+    </script>
+    
+    
+    <!-- Google Translate Script -->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</div>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);">
+    <div class="container-fluid">
+        <!-- Logo (Visible only on Mobile) -->
+        <a class="navbar-brand d-block d-lg-none text-white" href="#">
+            <!-- <img src="" alt="Logo" style="height: 40px;"> -->
+            <h2 class="text-center " style="margin: 0; font-size: 28px; color: rgb(0, 0, 0); font-weight: bold; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">WORLD EXPRESS</h2>
+        </a>
+
+        <!-- Navbar Toggler -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"><i class="fas fa-bars" style="color: #000000;"></i></span>
+        </button>
+
+        <div class="collapse navbar-collapse text-center " id="navbarNav">
+            <!-- live button -->
+            <div class="live-button">
+                <button class="btn btn-danger" style="margin-right: 10px;">Live</button>            
+            </div>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a href="/" class="nav-link text-black">HOME</a></li>
+                <li class="nav-item"><a href="/latestnews" class="nav-link text-black">LATEST</a></li>
+                <li class="nav-item"><a href="/national" class="nav-link text-black">NATIONAL</a></li>
+                <li class="nav-item"><a href="/international" class="nav-link text-black">WORLD</a></li>
+                <li class="nav-item"><a href="/sports" class="nav-link text-black">SPORTS</a></li>
+                <li class="nav-item"><a href="/entertaitment" class="nav-link text-black">ENTERTAINMENT</a></li>
+                <li class="nav-item"><a href="/health" class="nav-link text-black">HEALTH</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
